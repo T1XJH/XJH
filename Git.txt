@@ -1,0 +1,10 @@
+git config --global  user.name "T1XJH"配置用户名
+git config --global  user.email  "1059715044@qq.com"配置邮箱
+
+git init 把当前目录变成Git可以管理的仓库
+
+git add test.txt 把文件添加到仓库
+git commit -m "第一次提交" 把文件提交到仓库
+
+git status 查看仓库当前状态
+
