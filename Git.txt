@@ -7,4 +7,36 @@ git add test.txt 把文件添加到仓库
 git commit -m "第一次提交" 把文件提交到仓库
 
 git status 查看仓库当前状态
+git diff   查看修改的内容
+git log    显示最近到最远的提交日志
+git log --pretty=oneline 省略显示
+
+git reset --hard HEAD^    回退到上一个版本
+git reset --hard HEAD^^   回退到上上个版本
+git reset --hard HEAD~100 回退到上100个版本
+git reset --hard （具体版本号） c5161e(写5，6个也行) c5161e17e4e61a6519c0c2b1b0df344f2070a9d4  回退到具体版本
+
+git reflog 记录历史命令
+git checkout -- fileName  让这个fileName文件回到最后一次git commit 或者 git add 时的状态(撤销命令：可以回退到和版本库或缓存区一样)
+
+远程仓库
+创建SSH Key:
+	ssh-keygen -t  rsa -C "1059715044@qq.com" 一直回车
+	cd  /c/Users/Administrator/.ssh 进入到这个目录
+	id_rsa 私钥 
+	id_rsa.pub 公钥
+
+到官网配置公钥或私钥
+ssh -T git@github.com 验证钥匙是否通过
+
+创建远程仓库
+	到官网去创建仓库
+	git remote add origin git@github.com:T1XJH/XJH.git 关联远程仓库
+	git remote rm origin 删除关联
+	git pull origin master 先拉取远程仓库到本地仓库
+
+
+
+
+
 
