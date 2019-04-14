@@ -1,5 +1,5 @@
 git config --global  user.name "T1XJH"配置用户名
-git config --global  user.email  "1059715044@qq.com"配置邮箱
+git config --global  user.email  "105........@qq.com"配置邮箱
 
 git init 把当前目录变成Git可以管理的仓库
 
@@ -21,7 +21,7 @@ git checkout -- fileName  让这个fileName文件回到最后一次git commit 或者 git add 
 
 远程仓库
 创建SSH Key:
-	ssh-keygen -t  rsa -C "1059715044@qq.com" 一直回车
+	ssh-keygen -t  rsa -C "10597........@qq.com" 一直回车
 	cd  /c/Users/Administrator/.ssh 进入到这个目录
 	id_rsa 私钥 
 	id_rsa.pub 公钥
@@ -31,7 +31,7 @@ ssh -T git@github.com 验证钥匙是否通过
 
 创建远程仓库
 	到官网去创建仓库
-	git clone git@www.t1xjh.top:/Django/django.git 克隆服务器的远程仓库
+	git clone git@www.......op:/Django/django.git 克隆服务器的远程仓库
 	git remote add origin git@github.com:T1XJH/XJH.git 关联远程仓库
 	git remote rm origin 删除关联
 	git pull origin master 先拉取远程仓库到本地仓库
