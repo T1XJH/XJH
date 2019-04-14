@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div style="border: 1px solid red; float: left;">
+        <p id="sty">离毕业还有：</p>
+        <p id="time" class="sty"></p>
+    </div>
+    <script>
+       // var d = new Date()
+        var endTime = new Date("2020-6-1")
+        //console.log(endTime - d)
+        var i = 0;
+        setInterval(function () {
+            var nowd = new Date()
+            offtime = (endTime - nowd) / 1000;
+            day = offtime / 3600 / 24;
+            hour = offtime % (3600 * 24) / 3600;
+            minu = offtime % (3600 * 24) % 3600 / 60;
+            miao = offtime % (3600 * 24) % 3600 % 60;
+            
+            //console.log(minu, miao)
+            document.getElementById("time").innerHTML = parseInt(day) + "天" + parseInt(hour) + '小时' + parseInt(minu) + "分" + parseInt(miao) + "秒";
+            if (i == 0) {
+                document.getElementById("sty").style.color = "red";
+                document.getElementById("time").style.color = "red";
+                i = 1;
+            }
+            else if(i == 1) {
+                document.getElementById("sty").style.color = "green";
+                document.getElementById("time").style.color = "green";
+                i = 2;
+            }
+            else if(i == 2) {
+                document.getElementById("sty").style.color = "blue";
+                document.getElementById("time").style.color = "blue";
+                i = 0;
+            }
+            
+        },1000);
+        document.getElementById("#time")
+    </script>
+</body>
+</html>

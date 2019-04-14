@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <span style="position:absolute; top:0;">待选名单</span>
+        <select multiple size="100" style="width: 200px; height: 400px; position:absolute; top:25px;" id="ifSet">
+            <option>王五</option>
+            <option>李杰</option>
+            <option>赵家俊</option>
+            <option>董科</option>
+        </select>
+
+        <button style="position: absolute; top: 200px; left: 235px;" id="btn">>></button>
+
+        <span style="position:absolute; top:0; left: 300px;">参加名单</span>
+        <select multiple size="100" style="width: 200px; height: 400px; position:absolute; top:25px; left: 300px;" id="rtSel">
+        </select>
+    </div>
+    <script>
+        document.getElementById('btn').onclick = function () {
+            var ifSet = document.getElementById('ifSet');
+            var rtSel = document.getElementById('rtSel')
+            index = ifSet.selectedIndex;
+            if (index != -1) {
+                console.log(ifSet.options[index])
+                txt = ifSet.options[index].text;
+                ifSet.removeChild(ifSet.options[index]);
+
+                newOpt = document.createElement("option");
+                txtNode = document.createTextNode(txt);
+                newOpt.appendChild(txtNode);
+                rtSel.appendChild(newOpt);
+            }
+        }
+        
+    </script>
+</body>
+</html>

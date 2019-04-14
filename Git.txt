@@ -31,12 +31,19 @@ ssh -T git@github.com 验证钥匙是否通过
 
 创建远程仓库
 	到官网去创建仓库
+	git clone git@www.t1xjh.top:/Django/django.git 克隆服务器的远程仓库
 	git remote add origin git@github.com:T1XJH/XJH.git 关联远程仓库
 	git remote rm origin 删除关联
 	git pull origin master 先拉取远程仓库到本地仓库
+	git push -u origin master 把本地库的所有内容推送到远程库上（第一次）
+	git push origin master 之后只要本地作了提交，就可以通过命令把本地的最新修改推送至GitHub
 
+chown -R git:git /Django/django.git
 
+centos7(测试)：F:/python/python实用工具/Django/Django_testS centos7(测试)
+基础： F:/python/code
 
-
-
+远程测试服：
+cd ../Django/django_test
+git clone ../django.git
 

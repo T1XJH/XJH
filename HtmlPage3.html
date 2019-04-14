@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+	<style type="text/css">
+		.pos{
+			position: absolute;
+			left: 120px;
+		}
+	</style>
+</head>
+<body>
+    <p><b>用户注册</b></p>
+    <form action="HtmlPage.html" method="" onsubmit="return checkForm()">
+    	<span>用户名：</span><input type="text" id="user" class="pos"/><br />
+    	<span>用户密码：</span><input type="password" id="pwd" class="pos"/><br />
+    	<span>重复输入密码：</span><input type="password" id="checkpwd" class="pos"/><br />
+    	<span>有效邮箱地址：</span><input type="text" id="emadr" class="pos"/><br />
+    	<input type="submit" value="提交" /> 
+    	<input type="button" value="取消"/>
+    </form>
+    <script>
+    	function checkForm(){
+    		var user = document.getElementById('user');
+    		var pwd = document.getElementById('pwd');
+    		var checkpwd = document.getElementById('checkpwd');
+    		var emadr = document.getElementById('emadr').value;
+    		var reg = new RegExp(/^[0-9]$/);
+    		
+    		var atpos=emadr.indexOf("@");
+			var dotpos=emadr.lastIndexOf(".");
+    		
+    		if (reg.test(user.value.charAt(0))){
+    			alert("用户名不能以数字开头!");
+    			return false;
+    		}
+    		else if(!/^[A-Za-z]$/.test(user.value.charAt(0))){
+    			alert("用户名只能以字母开头!");
+    			return false;
+    		}
+    		else if(user.value.length < 6 || user.value.length > 20){
+    			alert("用户名长度在6和20个字符(包含)之间!");
+    			return false;
+    		}
+    		else if(user.value == pwd.value || user.value == checkpwd.value){
+    			alert("密码和重复密码不能和用户名相同!");
+    			return false;
+    		}
+    		else if(pwd.value != checkpwd.value){
+    			alert("密码和重复密码必须相同!");
+    			return false;
+    		}
+    		else if(pwd.value.length < 6 || pwd.value.length > 20){
+    			alert("密码长度在6和20个字符(包含)之间!");
+    			return false;
+    		}
+			else if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+				alert("不是一个有效的 e-mail 地址");
+			  	return false;
+			}
+    	}
+    </script>
+</body>
+</html>
