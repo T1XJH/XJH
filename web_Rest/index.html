@@ -1,10 +1,169 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8" />
-		<title></title>
+		<title>stock_al</title>
+		<link rel="stylesheet" href="./css/semantic.css" />
+		<script src="./js/jquery.min.js"></script>
+		<script src="./js/highcharts2.js"></script>
+		<script src="./js/highcharts-more2.js"></script>
+		<script src="./js/exporting2.js"></script>
 	</head>
+
 	<body>
-		
+		<div>
+			<span>股票代码：</span>
+			<input type="text" id="stock_d" />
+			<button id="btn_data">确认</button>
+		</div>
+		<div class="ui equal width grid" style="margin:5px 0 5px 0;width:100%">
+			<div class="row">
+				<div class="column">
+					<div class="ui container segment">
+						<div class="ui container" id="chart1" style="height:400px width: 100%;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<div class="ui container segment">
+						<div class="ui container" id="chart2" style="height:400px width: 100%;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<div class="ui container segment">
+						<div class="ui container" id="chart3" style="height:400px width: 100%;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<div class="ui container segment">
+						<div class="ui container" id="chart4" style="height:400px; width: 100%;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			$(document).ready(function() {
+				var index = 600000;
+				$("#btn_data").click(function() {
+					index = $("#stock_d").val();
+					$.ajax({
+						type: "GET",
+						url: "http://www.t1xjh.top/api/" + index,
+						dataType: "json",
+						success: function(data) {
+							if(data.code == 200) {
+								data_items = data.data
+								data_items = $.parseJSON(data_items);
+								console.log(data_items.X,data_items.MA5)
+								
+								$(function() {
+					$('#chart1').highcharts({
+						chart: {
+							zoomType: 'xy'
+						},
+						credits: {
+							enabled: false
+						},
+						title: {
+							text: 'Stock Analyze'
+						},
+						yAxis: {
+							title: {
+								text: '价格'
+							}
+						},
+						xAxis: {
+							categories: data_items.X
+						},
+						series: 	data_items.item_info
+					});
+				});
+
+				$(function() {
+					$('#chart2').highcharts({
+						chart: {
+							zoomType: 'xy'
+						},
+						credits: {
+							enabled: false
+						},
+						title: {
+							text: 'Stock Analyze(MA 5)'
+						},
+						yAxis: {
+							title: {
+								text: '价格'
+							}
+						},
+						xAxis: {
+							categories: data_items.X
+						},
+						series: data_items.MA5
+					});
+				});
+
+				$(function() {
+					$('#chart3').highcharts({
+						chart: {
+							zoomType: 'xy'
+						},
+						credits: {
+							enabled: false
+						},
+						title: {
+							text: 'Stock Analyze(MA_30)'
+						},
+						yAxis: {
+							title: {
+								text: '价格'
+							}
+						},
+						xAxis: {
+							categories: data_items.X
+						},
+						series: data_items.MA30
+					});
+				});
+
+				$(function() {
+					$('#chart4').highcharts({
+						chart: {
+							zoomType: 'xy'
+						},
+						credits: {
+							enabled: false
+						},
+						title: {
+							text: 'Stock Analyze(MA 60)'
+						},
+						yAxis: {
+							title: {
+								text: '价格'
+							}
+						},
+						xAxis: {
+							categories: data_items.X
+						},
+						series: data_items.MA60
+					});
+				});
+							} else {
+								
+							}
+						}
+					});
+				
+
+				
+				});
+			});
+		</script>
 	</body>
+
 </html>
