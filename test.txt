@@ -1,5 +1,162 @@
-Hello World��666
+Hello World£¡666
 T1Xjh
 What are you doing
 I don't know
 I am here
+import os
+import pygame
+import time
+import sys
+import cv2
+from pygame.locals import *
+import tools.faceu as bd
+from aip import AipSpeech
+import pyttsx3
+
+pygame.init()
+pygame.mixer.init()
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (32, 27)
+pygame.display.set_caption('人机匹配')
+screen = pygame.display.set_mode((1300, 700))
+
+
+SLEEP_TIME_LONG = 0
+cap = cv2.VideoCapture(0)
+bj = 'images/bg (3).png'
+mous = 'images/mous.png'
+mous = pygame.image.load(mous)
+mous1 = 'images/mouse.png'
+mous1 = pygame.image.load(mous1)
+nopeople = 'images/nopeople.png'
+nopeople = pygame.image.load(nopeople)
+n = 'images/222.png'
+n1 = pygame.image.load(n)
+# m = 'tools/music.mp3'  
+m = 'tools/start_music.ogg'  
+# pygame.mixer.music.load(m)
+# pygame.mixer.music.play()
+souobj = pygame.mixer.Sound(m)
+souobj.play()
+
+def PYTTSX(data1, data2):
+    engines = pyttsx3.init()
+    rate = engines.getProperty('rate')
+    engines.setProperty('rate', rate - 50)
+    volume = engines.getProperty('volume')
+    engines.setProperty('volume', volume + 0.5)
+    engines.say(data1)
+    engines.say(data2)
+    engines.runAndWait()
+
+class take_photo():
+    tk = 'images/alert.png'
+    al = pygame.image.load(tk)  
+    filename = "images/test.jpg" 
+    path = os.path.abspath('') 
+    image_msg = path + '/images/test.jpg'
+    print(image_msg)
+
+    def image(self):
+        ret, frame = cap.read()
+        cv2.imwrite(self.filename, frame)
+        image = pygame.image.load(self.filename)
+        image_new = pygame.transform.scale(image, (640, 480))
+        image_new = pygame.transform.flip(image_new, True, False)
+        bg = pygame.image.load(bj)
+        screen.blit(image_new, (70, 125))
+        screen.blit(bg, (0, 0))
+        screen.blit(mous, (373, 511))
+
+    def show_video(self):
+        n1_x = 217
+        n1_y = 193
+
+        while True:
+            self.image()
+            pre = pygame.mouse.get_pos()
+            if 373 <= pre[0] <= 433 and 511 <= pre[1] <= 571:
+                screen.blit(mous1, (366, 504))
+            if 494 >= n1_y >= 193:
+                n1_y += 10
+                if n1_y > 493:
+                    n1_y = 193
+            screen.blit(n1, (n1_x, n1_y)) 
+            pygame.display.flip()
+            time.sleep(SLEEP_TIME_LONG)
+            if self.handleEvent():
+                break
+
+    def handleEvent(self):
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                cap.release()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and 373 <= event.pos[0] <= 433 and 511 <= event.pos[1] <= 571:
+                self.show_image()
+            elif event.type == pygame.MOUSEBUTTONDOWN and 678 <= event.pos[0] <= 881 and 417 <= event.pos[1] <= 462:
+                self.show_video()
+            elif event.type == pygame.MOUSEBUTTONDOWN and 437 <= event.pos[0] <= 645 and 417 <= event.pos[
+                1] <= 462:
+                cap.release()
+                cv2.destroyAllWindows()
+                pygame.quit()
+                os.system("python index.py")
+                exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and 905 <= event.pos[0] <= 1033 and 432 <= event.pos[1] <= 470:
+                self.show_video()
+
+    def show_image(self):
+        self.image()
+        face = bd.Faceu()
+        face.face_detection(self.image_msg)
+        analytic_dict = face.face_detection(self.image_msg)
+        if analytic_dict:
+            igender = analytic_dict['gender']
+            iage = analytic_dict['age']
+            ibeauty = analytic_dict['beauty']
+            with open('tools/score.txt', 'w') as f:
+                f.write(str(int(ibeauty)))
+
+            if igender == 'male':
+                igender = '男'
+            else:
+                igender = '女'
+
+            TextFont = pygame.font.Font("my_font/font3.ttf", 30)
+            infgander1 = TextFont.render(igender, True, (255, 255, 255))
+            infage1 = TextFont.render(str(iage), True, (255, 255, 255))
+            infscore1 = TextFont.render(str(int(ibeauty)), True, (255, 255, 255))
+            screen.blit(infgander1, (1000, 274))
+            screen.blit(infage1, (1000, 372))
+            screen.blit(infscore1, (1000, 469))
+            pygame.display.update()
+            word1 = "您的战斗力是" + str(int(ibeauty))
+            word2 = "匹配生命值是" + str(int(ibeauty))
+            word = word1 + word2
+            souobj.stop()
+            pygame.time.delay(15)
+            while pygame.mixer.music.get_busy():
+                pygame.time.delay(15)
+            PYTTSX(word1, word2)
+
+        else:
+            screen.blit(nopeople, (802, 141))
+            TextFont = pygame.font.Font("my_font/font3.ttf", 34)
+            war = TextFont.render('未识别到人像', True, (255, 255, 255))
+            screen.blit(war, (885, 340))
+            TextFont = pygame.font.Font("my_font/font3.ttf", 30)
+            war1 = TextFont.render('重新扫描', True, (255, 255, 255))
+            screen.blit(war1, (925, 430))
+        while True:
+            pygame.display.flip()
+            if analytic_dict:
+                time.sleep(2)
+                screen.blit(self.al, (0, 0))
+                screen.blit(infscore1, (810, 277))
+                screen.blit(infscore1, (810, 331))
+
+            self.handleEvent()
+
+take = take_photo()
+take.show_video()
